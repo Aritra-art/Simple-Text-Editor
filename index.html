@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Editor</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+
+        body {
+            font-family: 'Roboto Mono', monospace;
+            margin: 0px;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="display: flex; flex-direction: column; align-items: center; padding: 10rem 0rem;">
+        <div style="height: 5rem; width:20rem; background-color: #fecaca; text-align: center;
+        padding: 2px 10px; border-radius: 0.8rem; 
+        ">
+            <h2 style="color: #991b1b;">Simple Text Editor</h2>
+        </div>
+
+        <div style="margin: 4rem 2rem;">
+            <input type="text" placeholder="enter your text" id="inputValue"
+                style="padding: 9px 20px; font-size: 20px;border-color: #991b1b; border-radius: 6px;">
+            <button id="showBtn" style="padding: 6px 8px;
+            color: #991b1b; font-weight:bold; background-color: #fecaca; border-color: #991b1b; border-radius: 6px;
+            ">Show</button>
+            <button id="clearBtn" style="padding: 6px 8px;
+            color: #991b1b; font-weight:bold; background-color: white; border-color: #991b1b; border-radius: 6px;
+            ">Clear</button>
+        </div>
+        <div
+            style="height: 60px; width: 30rem; background-color: #fecaca; padding: 10px 20px; border-radius: 6px; align-items: center; margin-bottom:40px ;">
+            <select name="Font Family" id="fontFamily" onchange="fontFamilyHandler()" style="padding: 6px 8px;
+            color: #991b1b; font-weight:bold; background-color: white; border-color: #991b1b; border-radius: 6px;">
+                <option selected disabled>Font Family</option>
+                <option value="helvetica">Helvetica</option>
+                <option value="optima">Optima</option>
+                <option value="georgia">Georgia</option>
+                <option value="sans-serif">Sans-serif</option>
+                <option value="monospace">Monospace</option>
+                <option value="cursive">Cursive</option>
+                <option value="fantasy">Fantasy</option>
+            </select>
+            <input type="color" id="colorPicker" style="margin: 10px 10px;
+            padding: 2px 8px;
+            color: #991b1b; font-weight:bold; background-color: white; border-color: #991b1b; border-radius: 6px;
+            " value="#000000" onchange="colorPickerHandler()">
+            <button style="margin: 10px 10px;padding: 6px 8px;
+            color: #991b1b; font-weight:bold; background-color: white; border-color: #991b1b; border-radius: 6px;"
+                id="boldBtn">B</button>
+            <button style="margin: 10px 10px;
+            padding: 6px 8px;
+            color: #991b1b; font-weight:bold; background-color: white; border-color: #991b1b; border-radius: 6px;
+            " id="italicBtn">I</button>
+            <button style="margin: 10px 15px; padding: 6px 8px;
+            color: #991b1b; font-weight:bold; background-color: white; border-color: #991b1b; border-radius: 6px;"
+                id="sizePlus">S+</button>
+            <button style="margin: 10px 10px; padding: 6px 8px;
+            color: #991b1b; font-weight:bold; background-color: white; border-color: #991b1b; border-radius: 6px;"
+                id="sizeMinus">S-</button>
+        </div>
+        <div style="text-align: center; height: 60px; width: 40rem; padding: 10px 40px; border-radius: 6px;"
+            id="displayBg">
+            <p id="display"></p>
+        </div>
+        <footer style="margin-top: 10rem; margin-bottom: 30px;">Made by 💖 with <span id="nameTag"></span>
+        </footer>
+        <div>
+            <a href="https://github.com/Aritra-art"><img src="./imgs/icons8-github.svg" alt="github"
+                    style="padding: 8px 4px"></a>
+            <a href="https://www.linkedin.com/in/aritra-chowdhury-b95a66227/"><img
+                    src="./imgs/icons8-linkedin-circled.svg" alt="linkedin"></a>
+            <a href="https://www.facebook.com/aritra.chowdhury.549/"><img src="./imgs/icons8-facebook.svg"
+                    alt="facebook"></a>
+            <a href="https://www.instagram.com/aritra_papan/"><img src="./imgs/icons8-instagram.svg"
+                    alt="instagram"></a>
+        </div>
+    </div>
+    <script>
+        const inputValue = document.querySelector("#inputValue")
+        const showBtn = document.querySelector("#showBtn")
+        const clearBtn = document.querySelector("#clearBtn")
+        const boldBtn = document.querySelector("#boldBtn")
+        const display = document.querySelector("#display")
+        const italicBtn = document.querySelector("#italicBtn");
+        const sizePlus = document.querySelector("#sizePlus");
+        const sizeMinus = document.querySelector("#sizeMinus");
+        const colorPicker = document.querySelector("#colorPicker");
+        const fontFamily = document.querySelector("#fontFamily")
+        const displayBg = document.querySelector("#displayBg")
+        const nameTag = document.querySelector("#nameTag")
+        let bCounter = 0;
+        let iCounter = 0;
+        let size = 20;
+        display.style.fontSize = `${size}px`
+        display.style.color = colorPicker.value;
+        displayBg.style.backgroundColor = "white";
+        nameTag.textContent = "<Aritra Chowdhury/>"
+
+        const showHandler = () => {
+            if (inputValue.value) {
+                display.textContent = inputValue.value;
+                displayBg.style.backgroundColor = "#fecaca"
+            } else {
+                displayBg.style.backgroundColor = "white"
+                display.innerHTML = `<small style="font-style:italic; color:red;">please enter a text</small>`
+            }
+        }
+        const boldHandler = () => {
+            bCounter++
+            if (bCounter % 2 != 0) {
+                display.style.fontWeight = "bold";
+            } else {
+                display.style.fontWeight = "500";
+            }
+
+        }
+        const italichandler = () => {
+            iCounter++;
+            if (iCounter % 2 != 0) {
+                display.style.fontStyle = "italic";
+            } else {
+                display.style.fontStyle = "normal";
+            }
+        }
+        const sizeIncreaseHandler = () => {
+            size += 2;
+            display.style.fontSize = `${size}px`
+        }
+        const sizeDecreaseHandler = () => {
+            if (size > 20) {
+                size -= 2
+                display.style.fontSize = `${size}px`
+            }
+        }
+        const colorPickerHandler = () => {
+            display.style.color = colorPicker.value;
+        }
+        const fontFamilyHandler = () => {
+            display.style.fontFamily = fontFamily.value;
+        }
+
+        const clearHandler = () => {
+            displayBg.style.backgroundColor = "white"
+            inputValue.value = null;
+            display.textContent = null;
+        }
+
+        showBtn.addEventListener("click", showHandler);
+        clearBtn.addEventListener("click", clearHandler);
+        boldBtn.addEventListener("click", boldHandler);
+        italicBtn.addEventListener("click", italichandler);
+        sizePlus.addEventListener("click", sizeIncreaseHandler);
+        sizeMinus.addEventListener("click", sizeDecreaseHandler);
+    </script>
+</body>
+
+</html>
